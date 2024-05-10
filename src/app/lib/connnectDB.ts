@@ -3,6 +3,7 @@ import mongoose, { MongooseError } from "mongoose";
 type connectionType = {
     isConnected?: number;
 }
+//extra object
 const connection: connectionType = {}
 
 const connectDB = async () => {
@@ -16,7 +17,6 @@ const connectDB = async () => {
     catch (err : any) { 
         console.log("Connection Error", err.message);
         mongoose.connection.close();
-
         process.exit(0)
     }
 
