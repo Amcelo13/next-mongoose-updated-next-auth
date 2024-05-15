@@ -1,3 +1,7 @@
+import { auth, signOut } from "@/auth"
+import { UserProfile } from "@/components/client/UserProfile";
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation"
 
 export default async function Home() {
 
@@ -8,9 +12,18 @@ export default async function Home() {
   }
 
   const ProductsArray  = await fetchProducts()   
-
+  const session = await auth()
+  const user = session?.user  
+  if(!user) redirect('/login')
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <UserProfile user={user} />
+      <form action={async()=> {
+        'use server'
+        await signOut()
+      }}>
+        <Button type="submit" variant={'destructive'}>Sign Out</Button>
+      </form>
       <h1 className="text-4xl font-bold text-center">Products</h1>
       <div className="grid grid-cols-3 gap-4">
         {ProductsArray.map((product:any) => (

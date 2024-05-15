@@ -1,3 +1,4 @@
+"use server";
 import mongoose, { Document, mongo, Schema } from "mongoose";
 
 export interface IProduct extends Document {
@@ -12,5 +13,5 @@ const productSchema: Schema = new mongoose.Schema({
     price: { type: Number, required: true }
 })
 
-const ProductModel = mongoose.models.products || mongoose.model<IProduct>('products', productSchema))
+const ProductModel = mongoose.models.products || mongoose.model<IProduct>('products', productSchema)
 export default ProductModel;
