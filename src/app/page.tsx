@@ -1,6 +1,8 @@
 import { auth, signOut } from "@/auth"
 import { UserProfile } from "@/components/client/UserProfile";
 import { Button } from "@/components/ui/button";
+import { decode, encode } from "next-auth/jwt";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
 
 export default async function Home() {
@@ -14,6 +16,14 @@ export default async function Home() {
   const ProductsArray  = await fetchProducts()   
   const session = await auth()
   const user = session?.user  
+  const cookiesOfNextAuth = cookies().get("authjs.session-token")
+
+  //If want to decode it to JWT token to send it to backend
+  console.log('--->',await decode({
+    token: cookiesOfNextAuth?.value as string,
+    salt: cookiesOfNextAuth?.name as string,
+    secret: process.env.AUTH_SECRET as string,
+  }))
   if(!user) redirect('/login')
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
