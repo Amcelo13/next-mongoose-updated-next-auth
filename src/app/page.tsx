@@ -1,9 +1,13 @@
 import { auth, signOut } from "@/auth"
-import { UserProfile } from "@/components/client/UserProfile";
+import { UserProfileProps } from "@/components/client/UserProfile";
 import { Button } from "@/components/ui/button";
 import { decode, encode } from "next-auth/jwt";
+import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
+import { FC } from "react";
+
+const UserProfile = dynamic(() => import('@/components/client/UserProfile') as any, { ssr: false }) as FC<UserProfileProps>;
 
 export default async function Home() {
 
