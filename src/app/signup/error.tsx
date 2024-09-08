@@ -8,8 +8,8 @@ const Error = ({ error, reset }: {
 }) => {
 
   useEffect(() => {
-    console.error(error)
-    toast.error('Something went wrong!')
+    // console.error(error.message)
+    toast.error(error.message)
   }, [error])
 
   return <Toaster />
