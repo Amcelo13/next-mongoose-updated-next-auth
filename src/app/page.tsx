@@ -1,11 +1,10 @@
 import { auth, signOut } from "@/auth"
+import ChatUI from "@/components/client/chat-ui";
 import UserProfile from "@/components/client/UserProfile";
 import { Button } from "@/components/ui/button";
 import { decode, encode } from "next-auth/jwt";
-import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
-import { FC } from "react";
 
 
 export default async function Home() {
@@ -29,16 +28,18 @@ export default async function Home() {
   }))
   if (!user) redirect('/login')
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <UserProfile user={user} />
-      <form action={async () => {
-        'use server'
-        await signOut()
-      }}>
-        <Button type="submit" variant={'destructive'}>Sign Out</Button>
-      </form>
-      <h1 className="text-4xl font-bold text-center">Products</h1>
-      <div className="grid grid-cols-3 gap-4">
+    <div>
+
+      <main className="flex gap-3 items-center justify-between p-10">
+        <UserProfile user={user} />
+        <form action={async () => {
+          'use server'
+          await signOut()
+        }}>
+          <Button type="submit" variant={'destructive'}>Sign Out</Button>
+        </form>
+        {/* <h1 className="text-4xl font-bold text-center">Products</h1> */}
+        {/* <div className="grid grid-cols-3 gap-4">
         {ProductsArray.map((product: any) => (
           <div key={product._id} className="bg-gray-200 p-4 rounded-lg">
             <h2 className="text-xl font-bold">{product.name}</h2>
@@ -46,7 +47,9 @@ export default async function Home() {
             <p className="text-gray-600">${product.price}</p>
           </div>
         ))}
-      </div>
-    </main>
+      </div> */}
+      </main>
+      <ChatUI />
+    </div>
   );
 }
