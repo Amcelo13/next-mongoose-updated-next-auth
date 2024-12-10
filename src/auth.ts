@@ -27,7 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       // authorize: async({email, password, confirmPassword}) => { 
-      authorize: async (credentials) => {
+      authorize: async (credentials:any) => {
         const { email } = credentials
         const user: any = await getUser(email as string)
         if (user) {
@@ -45,7 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
 
   callbacks: {
-    signIn: async ({ user, account }) => {
+    signIn: async ({ user, account }:any) => {
 
       if (account?.provider === 'google') {
         try {
